@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1 className='qr__title'>QR Code Generator</h1>
+      <form className='qr__form'>
+        <input
+        className='qr__input' 
+        type="text" 
+        placeholder='Name'
+        />
+        <input 
+        className='qr__input'
+        type="text" 
+        placeholder='Phone Number'
+        />
+        <input 
+        className='qr__input'
+        type="text" 
+        placeholder='email'
+        />
+        <input 
+        className='qr__input'
+        type="text" 
+        placeholder='Website'
+        />
+        <button className='qr__button'>Generate</button>
+      </form>
     </div>
   );
 }
