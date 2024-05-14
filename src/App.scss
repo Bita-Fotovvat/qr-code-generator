@@ -34,4 +34,21 @@
     color: white;
     
   }
+  &__label{
+    color: white;
+    text-align: left;
+  }
+  &__radio{
+    color: white;
+  }
+  &__radio2{
+    color: white;
+    text-align: left;
+  }
+  &__radiopar{
+    display: flex;
+  }
+  &__radiocontainer{
+    padding-bottom: 1rem;
+  }
 }
