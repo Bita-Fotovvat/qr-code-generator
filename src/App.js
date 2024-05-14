@@ -4,18 +4,12 @@ import { useState } from 'react';
 
 function App() {
   const [url, setUrl] = useState('');
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
   const [qrcode, setQrcode ] = useState('');
+  const [items, setItems] = useState([]);
+  const [image, setImage] = useState(qrcode);
 
-  const GenerateQRCode = (e) => {
-    // e.preventdefault();
+  const GenerateQRCode = () => {
     QRCode.toDataURL(url, (err, url) => {
-      // if(!url){
-      //   alert('Please enter a valid url.')
-      //   return;
-      // }
       if (err) {
         console.error(err);
         return;
@@ -24,20 +18,27 @@ function App() {
       setQrcode(url);
     })
   }
+
   const handleSubmit = (e)=>{
     e.preventDefault();
     const formData = {
-      // options: document.querySelector('input[name="options"]:checked'),
-      name: e.target.userName.value,
-      phone: e.target.phoneNumber.value,
-      email: e.target.userEmail.value,
       website: e.target.website.value
     };
     console.log(formData);
+    const item = {
+      id: Math.floor(Math.random()*1000),
+      value: url,
+      image: qrcode
+    }
+    setItems(oldList=> [...oldList, item]);
+    console.log(items);
     setUrl('');
-    setName('');
-    setPhone('');
-    setEmail('');
+  }
+  function showWebsite(id){
+    const item = items.find(item => item.id == id);
+    if (item){
+      setImage(item.image)
+    }
   }
 
 
@@ -45,29 +46,7 @@ function App() {
     <div className="App">
       <h1 className='qr__title'>QR Code Generator</h1>
       <form className='qr__form' onSubmit={handleSubmit}>
-        {/* <section className='qr__radiocontainer'>
-          <div className='qr__radio2'>Is this for a business or personal?</div>
-          <div className='qr__radiopar'><input type="radio" id="option1" name="options"/><label className='qr__radio' for="option1">Business</label></div>
-          <div className='qr__radiopar'><input type="radio" id="option2" name="options"/><label className='qr__radio' for="option2">Personal</label></div>
-        </section> */}
-        <input
-          className='qr__input' 
-          type="text" 
-          placeholder='Name'
-          name='userName'
-        />
-        <input
-          className='qr__input'
-          type="text" 
-          placeholder='Phone Number'
-          name='phoneNumber'
-        />
-        <input 
-          className='qr__input'
-          type="email" 
-          placeholder='email'
-          name='userEmail'
-        />
+
         <label className="qr__label" htmlFor="website">Website URL</label>
         <input 
           className='qr__input'
@@ -82,8 +61,19 @@ function App() {
         <button className='qr__button' onClick={GenerateQRCode}>Generate</button>
       </form>
       {qrcode && <>
-        <img src={qrcode} alt="QR Code" />
+        <img src={image} alt="QR Code" />
       </>}
+      <ul>
+        {items.map(item=>{
+          return(
+            <section className='qr__imagelist'>
+              <li className="qr__li" key={item.id}>{item.value}</li>
+              <img src={item.image} alt="qr code" />
+              <button onClick={()=>showWebsite(item.id)}>Show Website</button>
+            </section>
+          )
+        })}
+      </ul>
     </div>
   );
 }

@@ -20,6 +20,7 @@
     flex-direction: column;
     width: 40%;
     margin: auto;
+    // padding-bottom: 2rem;
   }
   &__input{
     border-radius: 0.5rem;
@@ -50,5 +51,12 @@
   }
   &__radiocontainer{
     padding-bottom: 1rem;
+  }
+  &__li{
+    color: white;
+    padding-right: 2rem;
+  }
+  &__imagelist{
+    display: flex;
   }
 }
