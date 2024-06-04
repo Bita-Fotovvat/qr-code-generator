@@ -4,7 +4,8 @@
   padding: 0;
   box-sizing: border-box;
   font-family: sans-serif;
-}.App {
+}
+.App {
   text-align: center;
   background-color: rgb(29, 29, 29);
   padding-top: 3rem;
@@ -20,7 +21,7 @@
     flex-direction: column;
     width: 40%;
     margin: auto;
-    // padding-bottom: 2rem;
+    padding-bottom: 2rem;
   }
   &__input{
     border-radius: 0.5rem;
@@ -31,7 +32,7 @@
     border-radius: 0.5rem;
     padding-bottom: 0.5rem;
     padding-top: 0.5rem;
-    background-color: rgb(32, 153, 48);
+    background-color:rgb(32, 153, 48);
     color: white;
     
   }
@@ -55,8 +56,39 @@
   &__li{
     color: white;
     padding-right: 2rem;
+    list-style-type: none;
   }
   &__imagelist{
+    padding-top: 1rem;
     display: flex;
+    justify-content: center;
+  }
+  &__imagelistparent{
+    padding-top: 2rem;
+  }
+  &__businesscardbutton{
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem;
+    color: white;
+    background-color: rgb(32, 153, 48);
+  }
+  &__businesscardbutton2{
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem;
+    color: white;
+    background-color: #cf0b04;
+  }
+  &__businesscard{
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    margin: auto;
+    border-radius: 4px;
+    width: 35vw;
+    background-color: rgb(198, 168, 128);
+  }
+  &__uli{
+    padding-bottom: 1rem;
   }
 }

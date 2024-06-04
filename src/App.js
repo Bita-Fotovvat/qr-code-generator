@@ -6,15 +6,12 @@ function App() {
   const [url, setUrl] = useState('');
   const [qrcode, setQrcode ] = useState('');
   const [items, setItems] = useState([]);
-  const [image, setImage] = useState(qrcode);
+  // const [image, setImage] = useState(qrcode);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [companyName, setCompanyName] = useState('');
-  const [companyName2, setCompanyName2] = useState('');
-  const [name2, setName2] = useState('');
-  const [phone2, setPhone2] = useState('');
-  const [email2, setEmail2] = useState('');
+  const [businessCard, setBusinessCard] = useState([]);
 
   const GenerateQRCode = () => {
     QRCode.toDataURL(url, (err, url) => {
@@ -22,9 +19,9 @@ function App() {
         console.error(err);
         return;
       }
-      // console.log(url);
       setQrcode(url);
-      setImage(url);
+      console.log(qrcode);
+      // setImage(url);
     })
   }
 
@@ -39,6 +36,7 @@ function App() {
       value: url,
       image: qrcode
     };
+    setBusinessCard(item);
     setItems(oldList=> [...oldList, item]);
     console.log(items);
     setCompanyName('');
@@ -46,23 +44,32 @@ function App() {
     setPhone('');
     setEmail('');
     setUrl('');
+    // setImage('');
   }
+  console.log(items);
+ 
+
   function showBusinessCard(id){
-    const item = items.find(item => item.id == id);
+    const item = items.find(item => item.id === id);
     if (item){
-      setImage(item.image);
-      setCompanyName2(item.companyname);
-      // console.log(companyName2);
-      setName2(item.name);
-      setPhone2(item.phone);
-      setEmail2(item.email);
+      setBusinessCard(item);
+      setQrcode(item.image);
+      console.log(businessCard);
+      console.log(businessCard.image);
+    }
+    console.log(items);
+  }
+
+  function deleteItem(id){
+    const filteredList = items.filter(item=> item.id !==id);
+    if (filteredList){
+      setItems(filteredList);
     }
   }
 
-
   return (
     <div className="App">
-      <h1 className='qr__title'>QR Code Generator</h1>
+      <h1 className='qr__title'>Business Card Generator</h1>
       <form className='qr__form' onSubmit={handleSubmit}>
 
       <label className="qr__label" htmlFor="companyname">Company Name</label>
@@ -110,7 +117,6 @@ function App() {
           name="email"
           id="email"
           onChange={e=> setEmail(e.target.value)}
-          // required
         />
 
         <label className="qr__label" htmlFor="website">Website URL</label>
@@ -126,17 +132,27 @@ function App() {
         />
         <button className='qr__button' onClick={GenerateQRCode}>Generate</button>
       </form>
-      {qrcode && <>
-        
-        <img src={image} alt="QR Code" />
-      </>}
-      <ul>
+      {qrcode &&
+      <section className='qr__businesscard'>
+        <ul className='qr__uli'>
+          <li className='qr__li'>Company Name: {businessCard.companyname}</li>
+          <li className='qr__li'>Name: {businessCard.name}</li>
+          <li className='qr__li'>Phone Number: {businessCard.phone}</li>
+          <li className='qr__li'>Email Address: {businessCard.email}</li>
+        </ul>
+        <img src={qrcode} alt="QR Code" />
+      </section>
+      }
+
+      <ul className='qr__imagelistparent'>
         {items.map(item=>{
           return(
+
             <section className='qr__imagelist'>
-              <li className="qr__li" key={item.id}>{item.companyname}</li>
+              <li className='qr__li'>{item.companyname}</li>
               {/* <img src={item.image} alt="qr code" /> */}
-              <button onClick={()=>showBusinessCard(item.id)}>Show Business Card</button>
+              <button className='qr__businesscardbutton' onClick={()=>showBusinessCard(item.id)}>Show Business Card</button>
+              <button className='qr__businesscardbutton2' onClick={()=>deleteItem(item.id)}>Delete</button>
             </section>
           )
         })}
