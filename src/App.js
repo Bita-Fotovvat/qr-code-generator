@@ -1,6 +1,6 @@
 import './App.scss';
 import QRCode from 'qrcode';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
   const [url, setUrl] = useState('');
@@ -39,6 +39,7 @@ function App() {
     setBusinessCard(item);
     setItems(oldList=> [...oldList, item]);
     console.log(items);
+
     setCompanyName('');
     setName('');
     setPhone('');
@@ -47,7 +48,20 @@ function App() {
     // setImage('');
   }
   console.log(items);
+
+  useEffect(()=>{
+    const itemsFromLocalStorage = localStorage.getItem("items");
+    if(itemsFromLocalStorage){
+      const parsedItemsFromLocalStorage = JSON.parse(itemsFromLocalStorage);
+      setItems(parsedItemsFromLocalStorage);
+      console.log(items);
+    }
+  }, []);
  
+
+  useEffect(() => {
+    localStorage.setItem("items", JSON.stringify(items));
+  }, [items]);
 
   function showBusinessCard(id){
     const item = items.find(item => item.id === id);
